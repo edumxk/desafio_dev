@@ -15,7 +15,7 @@
     </div>
     <?php
         require_once "funcoes.php";
-        resetDados2();
+        resetDados();
         $dadosArray = getDados("dados.txt");
     echo '<div class="container">';
         renderTable($dadosArray);

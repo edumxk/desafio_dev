@@ -28,52 +28,6 @@ function renderTable($table){
     echo "</div>";
 }
 
-function propagate($matrix) {
-    $matrix = addBorder($matrix); // Adiciona uma borda de zeros à matriz
-    $rows = count($matrix);
-    $cols = count($matrix[0]);
-
-    // Itera sobre cada célula da matriz
-    for ($i = 0; $i < $rows; $i++) {
-        for ($j = 0; $j < $cols; $j++) {
-
-            // Verifica se a célula é uma borda da matriz
-            if ($i == 0 || $j == 0 || $i == $rows - 1 || $j == $cols - 1) {
-                continue; // Se for uma borda, não faz nada
-            }
-
-            $adjacent_ones = 0; // Contador de células adjacentes com valor 1
-
-            // Verifica as células adjacentes à atual
-            for ($k = $i - 1; $k <= $i + 1; $k++) {
-                for ($l = $j - 1; $l <= $j + 1; $l++) {
-                    if ($k == $i && $l == $j) {
-                        continue; // Não considera a própria célula
-                    }
-                    if ($matrix[$k][$l] == 1) {
-                        $adjacent_ones++;
-                    }
-                }
-            }
-
-            // Verifica se a célula atual é 0 e deve ser alterada
-            if ($matrix[$i][$j] == 0 && $adjacent_ones > 1 && $adjacent_ones < 5) {
-                $matrix[$i][$j] = 1;
-            }
-
-            // Verifica se a célula atual é 1 e deve ser alterada
-            if ($matrix[$i][$j] == 1 && ($adjacent_ones < 4 || $adjacent_ones > 5)) {
-                $matrix[$i][$j] = 0;
-            }
-        }
-    }
-
-    // Mantém os valores 3 e 4 nas células [0][0] e [64][84], respectivamente
-    $matrix = removeBorder($matrix); // Remove a borda de zeros da matriz
-    $matrix[0][0] = 3;
-    $matrix[$rows - 1][$cols - 1] = 4;
-    return $matrix;
-}
 function addBorder($matrix) {
     $rows = count($matrix);
     $cols = count($matrix[0]);
@@ -88,6 +42,7 @@ function addBorder($matrix) {
 
     return $matrix;
 }
+
 function removeBorder($matrix) {
     $rows = count($matrix);
     $cols = count($matrix[0]);
@@ -134,7 +89,7 @@ function setDados($dados){
     return getDados("dados2.txt");
 }
 
-function resetDados2(){
+function resetDados(){
     $arquivo = fopen("dados2.txt", "w");
     //limpa arquivo
     ftruncate($arquivo, 0);
